@@ -9,56 +9,61 @@ while(edad<18){
 
 alert ("Es mayor de edad, puede continuar");
 
-const precioMother = 23000
-const precioRam = 8000
-const precioVideo = 85000
-const precioMicro= 45000
 
-function calcularIva (precio){
-    return precio *1.21;
+const precioMotherAsus = 23000
+const precioMotherEVGA = 20000
+const precioFuenteAsus = 15000
+const precioFuenteEVGA = 12000
+
+
+class Producto {
+    constructor (producto, marca, precio){
+        this.producto = producto.toUpperCase();
+        this.marca    = marca.toUpperCase();
+        this.precio   = precio;
+    }
+    sumarIva() {
+        this.precio = this.precio *1.21;
+    }
 }
 
-let producto = parseInt(prompt("Indique el producto que desea comprar para conocer su precio\n1.Motherboard\n2.Memoria Ram\n3.Placa de Video\n4.Microprocesador"))
-if(producto==1){
-    alert ("El precio de la Motherboard es de "+ precioMother)
-    let preguntaIVA = parseInt(prompt("Desea calcular el precio final con Iva \n1. Si\n2. No"))
-    if(preguntaIVA==1){
-        let ivaIncluidoMother = calcularIva(precioMother)
-        alert ("El Precio con Iva Incluido de la Motherboard es de "+ ivaIncluidoMother+"\nGracias por consultar con Hardtech")
-    }else{
-        alert ("Gracias por consultar con Hardtech")
-    }
+const productos = [];
+productos.push(new Producto (prompt("Escribe el nombre de tu producto \n.MOTHER\n.FUENTE"),prompt("Escribe la marca de tu producto \n.ASUS\n.EVGA")));
+alert("Producto Ingresado " + productos[0].producto +" "+ productos[0].marca);
 
-}else if(producto==2){
-    alert ("El precio de la Memoria Ram es de "+ precioRam)
-    let preguntaIVA = parseInt(prompt("Desea calcular el precio final con Iva \n1. Si\n2. No"))
-    if(preguntaIVA==1){
-        let ivaIncluidoRam = calcularIva(precioRam)
-        alert ("El Precio con Iva Incluido de la Ram es de "+ ivaIncluidoRam+"\nGracias por consultar con Hardtech")
-    }else{
-        alert ("Gracias por consultar con Hardtech")
-    }
-
-}else if(producto==3){
-    alert ("El precio de la Placa de Video es de "+ precioVideo)
-    let preguntaIVA = parseInt(prompt("Desea calcular el precio final con Iva \n1. Si\n2. No"))
-    if(preguntaIVA==1){
-        let ivaIncluidoVideo = calcularIva(precioVideo)
-        alert ("El Precio con Iva Incluido de la Placa de Video es de "+ ivaIncluidoVideo+"\nGracias por consultar con Hardtech")
-    }else{
-        alert ("Gracias por consultar con Hardtech")
-    }
-
-}else if(producto==4){
-    alert ("El precio del Microprocesador es de "+ precioMicro)
-    let preguntaIVA = parseInt(prompt("Desea calcular el precio final con Iva \n1. Si\n2. No"))
-    if(preguntaIVA==1){
-        let ivaIncluidoMicro = calcularIva(precioMicro)
-        alert ("El Precio con Iva Incluido de la Ram es de "+ ivaIncluidoMicro+"\nGracias por consultar con Hardtech")
-    }else{
-        alert ("Gracias por consultar con Hardtech")
-    }
-
-}else{
-    alert ("Producto no encontrado")
+if(productos[0].producto=="MOTHER" & productos[0].marca=="ASUS"){
+    productos[0].precio=precioMotherAsus; alert("El Precio de la Mother Asus sin IVA es de " + precioMotherAsus);
+}else if(productos[0].producto=="MOTHER" & productos[0].marca=="EVGA"){
+    productos[0].precio=precioMotherEVGA; alert("El Precio de la Mother EVGA sin IVA es de " + precioMotherEVGA);
+}else if(productos[0].producto=="FUENTE" & productos[0].marca=="ASUS"){
+    productos[0].precio=precioFuenteAsus; alert("El Precio de la Fuente Asus sin IVA es de " + precioFuenteAsus);
+}else if(productos[0].producto=="FUENTE" & productos[0].marca=="EVGA"){
+    productos[0].precio=precioFuenteEVGA; alert("El Precio de la Fuente EVGA sin IVA es de " + precioFuenteEVGA);
 }
+
+productos.push(new Producto (prompt("Escribe el nombre de tu producto \n.MOTHER\n.FUENTE"),prompt("Escribe la marca de tu producto \n.ASUS\n.EVGA")));
+alert("Producto Ingresado " + productos[1].producto +" "+ productos[1].marca);
+
+if(productos[1].producto=="MOTHER" & productos[1].marca=="ASUS"){
+    productos[1].precio=precioMotherAsus; alert("El Precio de la Mother Asus sin IVA es de " + precioMotherAsus);
+}else if(productos[1].producto=="MOTHER" & productos[1].marca=="EVGA"){
+    productos[1].precio=precioMotherEVGA; alert("El Precio de la Mother EVGA sin IVA es de " + precioMotherEVGA);
+}else if(productos[1].producto=="FUENTE" & productos[1].marca=="ASUS"){
+    productos[1].precio=precioFuenteAsus; alert("El Precio de la Fuente Asus sin IVA es de " + precioFuenteAsus);
+}else if(productos[1].producto=="FUENTE" & productos[1].marca=="EVGA"){
+    productos[1].precio=precioFuenteEVGA; alert("El Precio de la Fuente EVGA sin IVA es de " + precioFuenteEVGA);
+}
+
+
+//recorrer ARRAY con for
+for (const elementosArray of productos)
+    elementosArray.sumarIva();
+
+console.log(productos)
+
+let total = productos[0].precio + productos[1].precio
+
+alert("El total a pagar con Iva incluido es de $" + total);
+
+alert ("Gracias por consultar con Hardtech");
+
