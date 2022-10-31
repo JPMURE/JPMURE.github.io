@@ -1,69 +1,72 @@
-alert ("Bienvenido a Hardtech\nTienda de infórmatica");
+const carrito = [];
+let contenedor = document.getElementById("misproductos")
 
-let edad = parseInt(prompt("Indique su edad para continuar"))
-
-while(edad<18){
-    alert ("No permitido el ingreso a menores de edad")
-    edad = parseInt(prompt("Indique su edad para continuar"))
-}
-
-alert ("Es mayor de edad, puede continuar");
-
-
-const precioMotherAsus = 23000
-const precioMotherEVGA = 20000
-const precioFuenteAsus = 15000
-const precioFuenteEVGA = 12000
-
-
-class Producto {
-    constructor (producto, marca, precio){
-        this.producto = producto.toUpperCase();
-        this.marca    = marca.toUpperCase();
-        this.precio   = precio;
-    }
-    sumarIva() {
-        this.precio = this.precio *1.21;
+function renderizarProductos(){
+    for(const producto of productos){
+        contenedor.innerHTML += `
+        <div class="card" style="width: 14rem;">
+            <img class="card-img-top" src=${producto.foto} alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">${producto.id}</h5>
+                <p class="card-text">${producto.nombre}</p>
+                <button id='btn${producto.id}' class="btn btn-primary">Comprar</button>
+            </div>
+        </div>       
+        `;
     }
 }
 
-const productos = [];
-productos.push(new Producto (prompt("Escribe el nombre de tu producto \n.MOTHER\n.FUENTE"),prompt("Escribe la marca de tu producto \n.ASUS\n.EVGA")));
-alert("Producto Ingresado " + productos[0].producto +" "+ productos[0].marca);
+renderizarProductos();
 
-if(productos[0].producto=="MOTHER" & productos[0].marca=="ASUS"){
-    productos[0].precio=precioMotherAsus; alert("El Precio de la Mother Asus sin IVA es de " + precioMotherAsus);
-}else if(productos[0].producto=="MOTHER" & productos[0].marca=="EVGA"){
-    productos[0].precio=precioMotherEVGA; alert("El Precio de la Mother EVGA sin IVA es de " + precioMotherEVGA);
-}else if(productos[0].producto=="FUENTE" & productos[0].marca=="ASUS"){
-    productos[0].precio=precioFuenteAsus; alert("El Precio de la Fuente Asus sin IVA es de " + precioFuenteAsus);
-}else if(productos[0].producto=="FUENTE" & productos[0].marca=="EVGA"){
-    productos[0].precio=precioFuenteEVGA; alert("El Precio de la Fuente EVGA sin IVA es de " + precioFuenteEVGA);
+    productos.forEach((producto)=>{
+        document.getElementById(`btn${producto.id}`).addEventListener("click", function(){
+            agregarAlCarrito(producto);
+        });
+    });
+    
+    
+function agregarAlCarrito(productoAComprar){
+    carrito.push(productoAComprar);
+    console.table(carrito);
+    document.getElementById("tablabody").innerHTML += `
+        <tr>
+            <td>${productoAComprar.id}</td>
+            <td>${productoAComprar.nombre}</td>
+            <td>${productoAComprar.precio}</td>
+        </tr>
+    `;
+    
+    let totalCarrito = carrito.reduce((acumulador,prod)=>acumulador+prod.precio,0)
+    document.getElementById("total").innerText="Total a Pagar $ " +totalCarrito;
+;
+
 }
 
-productos.push(new Producto (prompt("Escribe el nombre de tu producto \n.MOTHER\n.FUENTE"),prompt("Escribe la marca de tu producto \n.ASUS\n.EVGA")));
-alert("Producto Ingresado " + productos[1].producto +" "+ productos[1].marca);
+let tablita = document.getElementById("tablita");
+let boton = document.getElementById("colortabla");
+let aspectoTabla = localStorage.getItem("aspectoTabla");
 
-if(productos[1].producto=="MOTHER" & productos[1].marca=="ASUS"){
-    productos[1].precio=precioMotherAsus; alert("El Precio de la Mother Asus sin IVA es de " + precioMotherAsus);
-}else if(productos[1].producto=="MOTHER" & productos[1].marca=="EVGA"){
-    productos[1].precio=precioMotherEVGA; alert("El Precio de la Mother EVGA sin IVA es de " + precioMotherEVGA);
-}else if(productos[1].producto=="FUENTE" & productos[1].marca=="ASUS"){
-    productos[1].precio=precioFuenteAsus; alert("El Precio de la Fuente Asus sin IVA es de " + precioFuenteAsus);
-}else if(productos[1].producto=="FUENTE" & productos[1].marca=="EVGA"){
-    productos[1].precio=precioFuenteEVGA; alert("El Precio de la Fuente EVGA sin IVA es de " + precioFuenteEVGA);
+if(aspectoTabla != null){
+    if(aspectoTabla == "table-danger"){
+        //
+    }else{
+        tablita.className = "table "+aspectoTabla;
+    }
+}else{
+    aspectoTabla = "table-danger";
 }
 
+boton.onclick = () => {
+    if (aspectoTabla == "table-danger"){
+        tablita.classList.remove("table-danger");
+        tablita.classList.add("table-info");
+        aspectoTabla = "table-info";
+    }else{
+        tablita.classList.remove("table-info");
+        tablita.classList.add("table-danger");
+        aspectoTabla = "table-danger";
 
-//recorrer ARRAY con for
-for (const elementosArray of productos)
-    elementosArray.sumarIva();
+    }
+    localStorage.setItem("aspectoTabla", aspectoTabla);
 
-console.log(productos)
-
-let total = productos[0].precio + productos[1].precio
-
-alert("El total a pagar con Iva incluido es de $" + total);
-
-alert ("Gracias por consultar con Hardtech");
-
+}
