@@ -17,9 +17,9 @@ function nuevoUsuario(email, nombre, apellido, edad, pwd){
 
     usuarios.push(usuario);
     
-    const h1 = document.createElement("h1");
-    h1.innerHTML=`Bienvenido, ${nombre +" "+ apellido}`;
-    document.body.appendChild(h1);
+    const bienvenida = document.createElement("h2");
+    bienvenida.innerHTML=`Bienvenido, ${nombre +" "+ apellido}`;
+    document.getElementById("hola").appendChild(bienvenida);
     }
 
 console.log(usuarios)
