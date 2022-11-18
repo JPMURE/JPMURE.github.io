@@ -1,5 +1,7 @@
-const carrito = [];
+let carrito = [];
 let contenedor = document.getElementById("misproductos")
+let btnFin = document.getElementById("finalizarcompra");
+
 
 function renderizarProductos(){
     for(const producto of productos){
@@ -69,4 +71,15 @@ boton.onclick = () => {
     }
     localStorage.setItem("aspectoTabla", aspectoTabla);
 
+}
+
+btnFin.onclick = () => {
+    carrito=[];
+    document.getElementById("tablabody").innerHTML="";
+    document.getElementById("total").innerText="Total a Pagar $ ";
+    Swal.fire(
+        'Compra Finalizada',
+        'Gracias',
+        'success'
+      )
 }
